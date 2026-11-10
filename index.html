@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teste Haltestelle.net – so geht's</title>
+<style>
+  :root {
+    --bg: #17181a;
+    --bar: #1c1d1f;
+    --panel: #1e1f22;
+    --line: #2f3033;
+    --ink: #ececee;
+    --muted: #b3b6bb;
+    --blue: #7ca4ef;
+    --blue-ink: #0f1a30;
+    --amber: #f5b53d;
+    --teal: #54c7a5;
+    --teal-bg: #1a2723;
+    --mono: "Courier New", Courier, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f5f6f7;
+      --bar: #ffffff;
+      --panel: #ffffff;
+      --line: #d9dbde;
+      --ink: #1a1b1d;
+      --muted: #52565c;
+      --blue: #2f5fcf;
+      --blue-ink: #ffffff;
+      --amber: #b86e00;
+      --teal: #0d7a5f;
+      --teal-bg: #e6f4ef;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+  }
+  a { color: inherit; }
+  a:focus-visible, summary:focus-visible, .btn:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+
+  .bar { background: var(--bar); border-bottom: 1px solid var(--line); }
+  .wrap { max-width: 53rem; margin: 0 auto; padding: 0 1.25rem; }
+  .bar .wrap { padding-top: 1.1rem; padding-bottom: 1rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1.75rem; }
+  .logo { font-family: var(--mono); font-weight: 700; font-size: 1.15rem; text-decoration: none; letter-spacing: .01em; }
+  .logo span { color: var(--amber); }
+  .bar nav { display: flex; gap: 1.25rem; font-size: .98rem; }
+  .bar nav a { text-decoration: none; color: var(--ink); }
+  .bar nav a:hover { text-decoration: underline; }
+
+  main { padding-top: 2.25rem; padding-bottom: 4rem; }
+  h1 {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: clamp(1.55rem, 5.5vw, 2.15rem);
+    line-height: 1.25;
+    margin: 0 0 1rem;
+  }
+  h1 a { text-decoration: none; color: var(--amber); }
+  h1 a:hover { text-decoration: underline; }
+  .lead { color: var(--muted); margin: 0 0 1.5rem; max-width: 40rem; }
+
+  .info {
+    background: var(--teal-bg);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--teal);
+    border-radius: 4px;
+    padding: .9rem 1.1rem 1rem;
+    margin: 0 0 1.75rem;
+  }
+  .info .tag { display: block; font-family: var(--mono); font-weight: 700; font-size: .85rem; color: var(--teal); margin-bottom: .2rem; }
+
+  ol { list-style: none; margin: 0; padding: 0; counter-reset: step; }
+  li.step {
+    counter-increment: step;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 1.15rem 1.25rem 1.3rem 4.1rem;
+    margin-bottom: .9rem;
+    position: relative;
+  }
+  li.step::before {
+    content: counter(step);
+    position: absolute; left: 1.15rem; top: 1.1rem;
+    width: 2.1rem; height: 2.1rem; border-radius: 4px;
+    background: var(--blue); color: var(--blue-ink);
+    font-family: var(--mono); font-weight: 700; font-size: 1.1rem;
+    display: grid; place-items: center;
+  }
+  li.step h2 { font-size: 1.1rem; margin: 0 0 .3rem; }
+  li.step p { margin: 0 0 .9rem; color: var(--muted); }
+
+  .btn {
+    display: inline-block; min-height: 2.9rem;
+    background: var(--blue); color: var(--blue-ink);
+    font-weight: 700; text-decoration: none;
+    padding: .75rem 1.3rem; border-radius: 4px;
+    border: 2px solid var(--blue);
+  }
+  .btn:hover { filter: brightness(1.08); }
+  .btn.ghost { background: transparent; color: var(--ink); border-color: var(--muted); }
+  .btn.ghost:hover { border-color: var(--ink); filter: none; }
+
+  details { margin-top: 1.6rem; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: .15rem 1.25rem; }
+  summary { cursor: pointer; font-weight: 700; padding: .85rem 0; }
+  details ul { padding-left: 1.2rem; margin: 0 0 1rem; color: var(--muted); }
+  details li { margin-bottom: .5rem; }
+  details p { color: var(--muted); }
+  details a { color: var(--blue); }
+
+  .small { color: var(--muted); font-size: .96rem; margin: 1.5rem 0 0; }
+  .signoff { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+  .signoff p { margin: 1.25rem 0 0; }
+  .signoff strong { font-family: var(--mono); }
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <a class="logo" href="https://haltestelle.net/" target="_blank" rel="noopener">haltestelle<span>.net</span></a>
+    <nav aria-label="Navigation">
+      <a href="https://haltestelle.net/" target="_blank" rel="noopener">Zur Website</a>
+      <a href="mailto:info@haltestelle.net">Kontakt</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>Hallo und herzlich willkommen zum Test von <a href="http://haltestelle.net/" target="_blank" rel="noopener">Haltestelle.net</a>!</h1>
+  <p class="lead">Danke, dass du dir Zeit zum Testen nimmst. :)<br>Das dauert etwa 2 Minuten. Du brauchst ein Android-Handy. Bitte mach die drei Schritte in dieser Reihenfolge.</p>
+
+  <div class="info">
+    <span class="tag">Wichtig</span>
+    Nimm in Schritt 1 die Google-Adresse, mit der dein Handy im Play Store angemeldet ist.
+    Du findest sie so: Play Store öffnen, oben rechts auf dein Profilbild tippen. Dort steht die Adresse.
+  </div>
+
+  <ol>
+    <li class="step">
+      <h2>Von Google freischalten lassen</h2>
+      <p>Tippe auf den Knopf und dann auf „Gruppe beitreten“. Damit weiß Google, dass du die App früher ausprobieren darfst.</p>
+      <a class="btn" id="group-link" href="#" target="_blank" rel="noopener">Freischalten</a>
+    </li>
+    <li class="step">
+      <h2>Tester werden</h2>
+      <p>Tippe auf den Knopf und dann auf „Tester werden“. Das kann nach Schritt 1 ein paar Minuten dauern, bis es klappt.</p>
+      <a class="btn" id="test-link" href="#" target="_blank" rel="noopener">Tester werden</a>
+    </li>
+    <li class="step">
+      <h2>App installieren</h2>
+      <p>Auf der Seite aus Schritt 2 findest du den Knopf „Im Google Play Store herunterladen“. Danach lässt sich die App ganz normal installieren und öffnen.</p>
+    </li>
+  </ol>
+
+  <details>
+    <summary>Es klappt nicht? Das hilft meistens</summary>
+    <ul>
+      <li><strong>„Seite nicht gefunden“ oder „Kein Zugriff“:</strong> Schritt 1 fehlt noch, oder du bist mit einer anderen Google-Adresse angemeldet. Mach Schritt 1 mit der Adresse aus dem Play Store und warte ein paar Minuten.</li>
+      <li><strong>Mehrere Google-Konten auf dem Handy:</strong> Tippe oben rechts auf deinen Kreis und wähle dasselbe Konto wie im Play Store.</li>
+      <li><strong>Die App erscheint nicht im Play Store:</strong> Öffne den Link aus Schritt 2 noch einmal und tippe auf „Tester werden“.</li>
+    </ul>
+    <p>Sonst schreib mir einfach: <a href="mailto:info@haltestelle.net">info@haltestelle.net</a></p>
+  </details>
+
+  <p class="small">Du hast ein iPhone? Schreib mir kurz, dann bekommst du einen anderen Link.</p>
+
+  <section class="signoff">
+    <a class="btn ghost" href="mailto:info@haltestelle.net">Kontakt aufnehmen</a>
+    <p>Danke und ganz liebe Grüße!<br><strong>Basti</strong></p>
+  </section>
+</main>
+
+<script>
+  // Nur diese beiden Links anpassen:
+  var CONFIG = {
+    groupUrl: "https://groups.google.com/g/haltestelle-net",
+    testUrl: "https://play.google.com/store/apps/details?id=net.haltestelle.app"
+  };
+  document.getElementById("group-link").href = CONFIG.groupUrl;
+  document.getElementById("test-link").href = CONFIG.testUrl;
+</script>
+</body>
+</html>
